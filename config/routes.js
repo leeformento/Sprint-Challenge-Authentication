@@ -33,14 +33,27 @@ function register(req, res) {
       })
       .catch(err => {
         console.error(err)
-        res.status(500).json({message: 'You cant register'});
+        res.status(500).json({message: 'You can not register'});
       });
     })
 }
 
 function login(req, res) {
+  const credentials = req.body;
+  db('users')
+    .where({ username: credentials.username })
+    .first()
+    .then(user => {
+      if (user && bcrypt.compareSync(credentials.password, user.password)) {
+        const token = generateToken(user);
+        res.status(200).json({ welcome: credentials.username, token });
+      } else {
+        res.status(401).json({ message: 'You can not log in' });
+      }
+    })
+    .catch(err => res.status(500).send(err));
+}	
 
-}
 
 function getJokes(req, res) {
   axios

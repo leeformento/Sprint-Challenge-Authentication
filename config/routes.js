@@ -51,7 +51,7 @@ function login(req, res) {
         res.status(401).json({ message: 'You can not log in' });
       }
     })
-    .catch(err => res.status(500).send(err));
+    .catch(err => res.status(500).send({ error: 'Error logging in' });
 }	
 
 

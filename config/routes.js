@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../database/dbConfig');
 
-const { authenticate } = require('./middlewares');
+const { authenticate, generateToken } = require('./middlewares');
 
 module.exports = server => {
   server.post('/api/register', register);
@@ -13,18 +13,6 @@ module.exports = server => {
 
 function test(req, res){
   res.send('Wazahh!');
-}
-
-const jwtSecret = 'nanay.tatay.gusto.kong.tinapay'
-
-function generateToken(user) {
-  const jwtPayload = {
-    ...user,
-  };
-  const jwtOptions = {
-    expiresIn: '1hr'
-  }
-  return jwt.sign(jwtPayload, jwtSecret, jwtOptions)
 }
 
 function register(req, res) {
@@ -51,7 +39,7 @@ function register(req, res) {
 }
 
 function login(req, res) {
-  // implement user login
+
 }
 
 function getJokes(req, res) {
@@ -65,4 +53,4 @@ function getJokes(req, res) {
     .catch(err => {
       res.status(500).json({ message: 'Error Fetching Jokes', error: err });
     });
-}
+  }

@@ -1,4 +1,7 @@
 const axios = require('axios');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const db = require('../database/dbConfig');
 
 const { authenticate } = require('./middlewares');
 
@@ -7,6 +10,10 @@ module.exports = server => {
   server.post('/api/login', login);
   server.get('/api/jokes', authenticate, getJokes);
 };
+
+function test(req, res){
+  res.send('Wazahh!');
+}
 
 function register(req, res) {
   // implement user registration

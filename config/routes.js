@@ -51,7 +51,9 @@ function login(req, res) {
         res.status(401).json({ message: 'You can not log in' });
       }
     })
-    .catch(err => res.status(500).send({ error: 'Error logging in' });
+    .catch(err => {
+      res.status(500).json({message: 'Error logging in'});
+    });
 }	
 
 
@@ -67,3 +69,5 @@ function getJokes(req, res) {
       res.status(500).json({ message: 'Error Fetching Jokes', error: err });
     });
   }
+
+  

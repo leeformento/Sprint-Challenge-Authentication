@@ -8,6 +8,8 @@ module.exports = {
   generateToken
 };
 
+
+
 // tokens
 function generateToken(user) {
   const jwtPayload = {
@@ -37,4 +39,6 @@ function authenticate(req, res, next) {
       error: 'No token provided, must be set on the Authorization Header',
     });
   }
+  
 }
+

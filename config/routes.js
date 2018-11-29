@@ -15,8 +15,39 @@ function test(req, res){
   res.send('Wazahh!');
 }
 
+const jwtSecret = 'nanay.tatay.gusto.kong.tinapay'
+
+function generateToken(user) {
+  const jwtPayload = {
+    ...user,
+  };
+  const jwtOptions = {
+    expiresIn: '1hr'
+  }
+  return jwt.sign(jwtPayload, jwtSecret, jwtOptions)
+}
+
 function register(req, res) {
   // implement user registration
+  const credentials = req.body;
+  const hash = bcrypt.hashSync(credentials.password, 10);
+  credentials.password = hash;
+  db('users')
+  .insert(credentials)
+  .then(ids => {
+      const id = ids[0];
+      db('users')
+      .where({ id: id})
+      .then(response => {
+        const token = generateToken(response[0]);
+        res.status(201).json({ username: credentials.username, token });
+        console.log(credentials.username);
+      })
+      .catch(err => {
+        console.error(err)
+        res.status(500).json({message: 'You cant register'});
+      });
+    })
 }
 
 function login(req, res) {

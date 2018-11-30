@@ -1,6 +1,7 @@
 <!-- Answers to the Short Answer Essay Questions go here -->
 
 1. What is the purpose of using _sessions_?
+.
 
 2. What does bcrypt do to help us store passwords in a secure manner.
 
